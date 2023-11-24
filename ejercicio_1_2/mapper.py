@@ -9,7 +9,7 @@
 import sys
 
 for line in sys.stdin:
-    if  (len(line) == 6):
         data = line.strip().split("\t")
+	if (len(data) != 6): continue
         date, time, store, item, cost, payment = data
-        print(store+"\t"+cost)
+        print(item+"\t"+cost)
