@@ -23,9 +23,9 @@ for line in sys.stdin:
 
     # Escribe un par key:value no dicc ante un cambio na key
     if thisKey in ventasMasAltas:
-	if(ventasMasAltas[thisKey] < thisSale): ventasMasAltas[thisKey] = thisSale
+	if(ventasMasAltas[thisKey] < float(thisSale)): ventasMasAltas[thisKey] = float(thisSale)
     else:
-        ventasMasAltas[thisKey] = thisSale
+        ventasMasAltas[thisKey] = float(thisSale)
 
     # Comprueba si la venta guardada en el diccionario es menor que la nueva venta en esta linea.
     oldKey = thisKey
@@ -34,4 +34,4 @@ for line in sys.stdin:
 # Escribe o diccionario cas ventas mais altas para cada metodo de pago
 if oldKey != None:
     for m, v in ventasMasAltas.items():
-	print(m+"\t"+v)
+	print(m+"\t"+str(v))
