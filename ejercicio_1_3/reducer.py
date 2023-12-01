@@ -2,8 +2,9 @@
 
 import sys
 
-salesTotal = 0
 oldKey = None
+
+ventasMasAltas = {}
 
 # Loop around the data
 # It will be in the format key\tval
@@ -20,16 +21,17 @@ for line in sys.stdin:
 
     thisKey, thisSale = data_mapped
 
-    # Escribe un par key:value ante un cambio na key
-    # Reinicia o total
-    if oldKey and oldKey != thisKey:
-        print(oldKey+"\t"+str(salesTotal))
-        oldKey = thisKey;
-        salesTotal = 0
+    # Escribe un par key:value no dicc ante un cambio na key
+    if thisKey in ventasMasAltas:
+	if(ventasMasAltas[thisKey] < thisSale): ventasMasAltas[thisKey] = thisSale
+    else:
+        ventasMasAltas[thisKey] = thisSale
 
+    # Comprueba si la venta guardada en el diccionario es menor que la nueva venta en esta linea.
     oldKey = thisKey
-    salesTotal += float(thisSale)
+    
 
-# Escribe o ultimo par, unha vez rematado o bucle
+# Escribe o diccionario cas ventas mais altas para cada metodo de pago
 if oldKey != None:
-    print(oldKey+"\t"+str(salesTotal))
+    for m, v in ventasMasAltas.items():
+	print(m+"\t"+v)
