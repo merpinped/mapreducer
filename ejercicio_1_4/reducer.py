@@ -2,9 +2,9 @@
 
 import sys
 
-oldKey = None
+oldSale = None
 
-ventasMasAltas = {}
+costoTotal = 0.0
 
 # Loop around the data
 # It will be in the format key\tval
@@ -14,24 +14,16 @@ ventasMasAltas = {}
 # then the key will change and we'll be dealing with the next store
 
 for line in sys.stdin:
-    data_mapped = line.strip().split("\t")
-    if len(data_mapped) != 2:
+    thisSale = float(line.strip())
+    if thisSale == None:
         # Something has gone wrong. Skip this line.
         continue
+	
+    if (costoTotal < thisSale): costoTotal = thisSale
 
-    thisKey, thisSale = data_mapped
-
-    # Escribe un par key:value no dicc ante un cambio na key
-    if thisKey in ventasMasAltas:
-	if(ventasMasAltas[thisKey] < float(thisSale)): ventasMasAltas[thisKey] = float(thisSale)
-    else:
-        ventasMasAltas[thisKey] = float(thisSale)
-
-    # Comprueba si la venta guardada en el diccionario es menor que la nueva venta en esta linea.
-    oldKey = thisKey
+    oldSale = thisSale
     
 
-# Escribe o diccionario cas ventas mais altas para cada metodo de pago
+# Escribe maximo absoluto de todas las ventas en caso de que el texto no viniese vacio.
 if oldKey != None:
-    for m, v in ventasMasAltas.items():
-	print(m+"\t"+str(v))
+	print(f'El máximo absoluto de todas las ventas es {costoTotal}')
